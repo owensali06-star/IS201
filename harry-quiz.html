@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Harry Styles Trivia Quiz</title>
+
+    <link rel="stylesheet" href="Styles/styles.css">
+</head>
+
+<body>
+
+<nav>
+    <div style="color:white; font-size:20px; font-weight:600;">Harry Styles Quiz</div>
+    <div>
+        <a href="index.html">Home</a>
+        <a href="resume.html">Resume</a>
+    </div>
+
+<div class="quiz-container">
+    <h1>Harry Styles Trivia Quiz</h1>
+    <p id="question"></p>
+
+    <div id="options"></div>
+
+    <button onclick="nextQuestion()">Next Question</button>
+
+    <p id="result"></p>
+</div>
+
+<script>
+    const quizData = [
+        {
+            question: "What band was Harry Styles originally a part of?",
+            options: ["One Direction", "The Vamps", "5 Seconds of Summer", "Why Don't We"],
+            answer: "One Direction"
+        },
+        {
+            question: "What is the name of Harry Styles' first solo album?",
+            options: ["Fine Line", "Harry Styles", "Watermelon Sugar", "Adore You"],
+            answer: "Harry Styles"
+        },
+        {
+            question: "Which movie did Harry Styles star in?",
+            options: ["Dunkirk", "La La Land", "The Notebook", "Inception"],
+            answer: "Dunkirk"
+        },
+        {
+            question: "What is Harry Styles' famous fruit-themed song?",
+            options: ["Kiwi", "Banana Pancakes", "Peaches", "Strawberry Swing"],
+            answer: "Kiwi"
+        },
+        {
+            question: "What year was Harry Styles born?",
+            options: ["1994", "1992", "1996", "1990"],
+            answer: "1994"
+        }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function loadQuestion() {
+        document.getElementById("result").innerHTML = "";
+        const q = quizData[currentQuestion];
+        document.getElementById("question").innerText = q.question;
+
+        const optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+
+        q.options.forEach(option => {
+            const div = document.createElement("div");
+            div.className = "option";
+            div.innerText = option;
+            div.onclick = () => checkAnswer(option);
+            optionsDiv.appendChild(div);
+        });
+    }
+
+    function checkAnswer(selected) {
+        const correct = quizData[currentQuestion].answer;
+        const result = document.getElementById("result");
+
+        if (selected === correct) {
+            score++;
+            result.innerHTML = "Correct! 🎉";
+            result.style.color = "green";
+        } else {
+            result.innerHTML = "Incorrect! The correct answer was: " + correct;
+            result.style.color = "red";
+        }
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            document.getElementById("question").innerText = "Quiz Complete!";
+            document.getElementById("options").innerHTML = "";
+            document.getElementById("result").innerHTML = 
+                `You scored ${score} out of ${quizData.length}! 💖`;
+        }
+    }
+
+    loadQuestion();
+</script>
+
+</body>
+</html>
